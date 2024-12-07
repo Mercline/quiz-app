@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 function App() {
   // Array of quiz questions and answers
@@ -26,6 +26,29 @@ function App() {
   const [score, setScore] = useState(0); // User's score
   const [answered, setAnswered] = useState(false); // Whether the question is answered
   const [isQuizFinished, setIsQuizFinished] = useState(false); // To track when the quiz is finished
+  const [timer, setTimer] = useState(10); // Timer for each question
+
+  // Shuffle function for options
+  const shuffleOptions = (options) => {
+    const shuffled = [...options];
+    for (let i = shuffled.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+    }
+    return shuffled;
+  };
+
+  // Timer effect
+  useEffect(() => {
+    if (timer === 0 && !answered) {
+      nextQuestion(); // Move to the next question when the timer reaches 0
+    } else {
+      const interval = setInterval(() => {
+        if (timer > 0) setTimer(timer - 1);
+      }, 1000);
+      return () => clearInterval(interval);
+    }
+  }, [timer, answered]);
 
   // Handle answer selection
   const handleAnswer = (answer) => {
@@ -45,22 +68,29 @@ function App() {
     }
     setAnswered(false);
     setSelectedAnswer("");
+    setTimer(10); // Reset timer for the next question
   };
 
   // Get current question data
   const { question, options, correctAnswer } = questions[currentIndex];
+  const shuffledOptions = shuffleOptions(options);
 
   return (
     <div className="App bg-gray-100 min-h-screen flex items-center justify-center py-8">
       <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-lg">
         <h1 className="text-3xl font-bold text-center text-blue-600 mb-6">Quiz App</h1>
 
+        {/* Display Timer */}
+        <div className="text-center text-xl font-semibold text-gray-700 mb-4">
+          Time Remaining: {timer} seconds
+        </div>
+
         {/* Display Question */}
         <div className="text-xl text-center mb-6 font-medium text-gray-800">{question}</div>
 
         {/* Options */}
         <div className="flex flex-col items-center space-y-4">
-          {options.map((option, index) => (
+          {shuffledOptions.map((option, index) => (
             <button
               key={index}
               onClick={() => handleAnswer(option)}
@@ -110,6 +140,19 @@ function App() {
               Restart Quiz
             </button>
           </div>
+        )}
+
+        {/* Quit Button */}
+        {!isQuizFinished && (
+          <button
+            onClick={() => {
+              setIsQuizFinished(true);
+              alert("You quit the quiz. Your final score: " + score);
+            }}
+            className="mt-6 bg-red-500 text-white px-6 py-2 rounded-lg hover:bg-red-600 transition duration-300"
+          >
+            Quit Quiz
+          </button>
         )}
       </div>
     </div>
