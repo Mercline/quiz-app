@@ -1,23 +1,38 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+# Node.js dependencies
+node_modules/
 
-# dependencies
-/node_modules
-/.pnp
-.pnp.js
+# Build directory (created by npm run build)
+build/
 
-# testing
-/coverage
+# Log files
+npm-debug.log
+yarn-debug.log
+yarn-error.log
 
-# production
-/build
-
-# misc
-.DS_Store
+# Environment variables (if you use .env files)
+.env
 .env.local
 .env.development.local
 .env.test.local
 .env.production.local
 
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
+# VS Code settings (if you use Visual Studio Code)
+.vscode/
+
+# MacOS system files
+.DS_Store
+
+# Windows system files
+Thumbs.db
+
+# Optional: If you're using coverage reports
+coverage/
+
+# Optional: JetBrains IDEs (e.g., WebStorm) settings
+.idea/
+
+# Optional: Tailwind CSS config (if you prefer not to track config files in Git)
+tailwind.config.js
+
+# Optional: PostCSS config (if you prefer not to track config files in Git)
+postcss.config.js

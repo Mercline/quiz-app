@@ -1,17 +1,18 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import React from 'react';  // Import React for JSX support
+import ReactDOM from 'react-dom/client';  // Import ReactDOM to render the app to the DOM
+import './index.css';  // Global CSS styles (which include Tailwind CSS)
+import App from './App';  // The main app component
+import reportWebVitals from './reportWebVitals';  // For measuring app performance
 
+// Get the 'root' div from index.html
 const root = ReactDOM.createRoot(document.getElementById('root'));
+
+// Render the App component wrapped in StrictMode
 root.render(
   <React.StrictMode>
     <App />
   </React.StrictMode>
 );
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
+// Measure performance if desired (optional)
 reportWebVitals();
